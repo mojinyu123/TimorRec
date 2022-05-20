@@ -1,6 +1,5 @@
 import argparse
-import string
-
+from constant import *
 
 def data_preparation_args():
     parser = argparse.ArgumentParser(description="data preparation")
@@ -28,7 +27,7 @@ def share_bottom_layer_args():
 
 def mmoe_layer_args():
     # feature_size, task_num, bottom_size, tower_size
-    parser = argparse.ArgumentParser(description="ShareBottomLayer") 
+    parser = argparse.ArgumentParser(description="mmoe") 
     parser.add_argument('--lr', type=float, default=0.001)
     parser.add_argument('--feature_size', type=int, default=499)
     parser.add_argument('--gate_num', type=int, default=2)
@@ -41,5 +40,21 @@ def mmoe_layer_args():
 
     parser.add_argument('--device', type=str, default='cpu')
     parser.add_argument('--dataset', type=str, default="census")
+
+    return parser.parse_args()
+
+def fm_layer_args():
+    # feature_size, task_num, bottom_size, tower_size
+    parser = argparse.ArgumentParser(description="fm") 
+    parser.add_argument('--lr', type=float, default=0.001)
+    parser.add_argument('--sparse_feature_number', type=int, default=10000001)
+    parser.add_argument('--sparse_feature_dim', type=int, default=9)
+    parser.add_argument('--dense_feature_number', type=int, default=13)
+
+    parser.add_argument('--epoch', type=int, default=10)
+    parser.add_argument('--bs', type=int, default=4096)
+
+    parser.add_argument('--device', type=str, default='cpu')
+    parser.add_argument('--dataset', type=str, default="criteo")
 
     return parser.parse_args()
