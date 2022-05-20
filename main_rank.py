@@ -28,7 +28,7 @@ if __name__ == "__main__":
     metrics_list, metrics_list_name = dy_model_class.create_metric()
 
     print("Begin run.......")
-    interval = 2
+    interval = 5
     # train 
     model.train()
     for epoch in range(args.epoch):
@@ -40,7 +40,7 @@ if __name__ == "__main__":
             loss = dy_model_class.dygraph_train(model, bacth)
             loss.backward()
             optimizer.step()
-            
+
             loss_epoch += loss.cpu().item()
             batch_num += 1
         spend_time = time.time() - start_time
@@ -61,7 +61,7 @@ if __name__ == "__main__":
                 for idx, bacth in enumerate(test_data_loader):
                     dy_model_class.infer(model, bacth, metrics_list)
                 
-                print("Epoch:%d--------val data metric---------:"%epoch)
+                print("--------val data metric Epoch:%d---------:"%epoch)
                 for i, metric_name in enumerate(metrics_list_name):
                     print(metric_name + ":" + str(metrics_list[i].cal()), end='; ')
                     metrics_list[i].refresh()
